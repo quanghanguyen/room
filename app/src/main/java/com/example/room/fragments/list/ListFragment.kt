@@ -17,13 +17,15 @@ import com.example.room.model.User
 
 class ListFragment : Fragment() {
 
-    private lateinit var listBinding : FragmentListBinding
+//    private lateinit var listBinding : FragmentListBinding
+    private var _binding: FragmentListBinding? = null
+    private val binding get() = _binding!!
     private lateinit var listAdapter: ListAdapter
     private val userViewModel : UserViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        listBinding.addButton.setOnClickListener {
+        binding.addButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
         initList()
@@ -37,7 +39,7 @@ class ListFragment : Fragment() {
     }
 
     private fun initList() {
-        listBinding.recyclerView.apply {
+        binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             listAdapter = ListAdapter(arrayListOf())
             adapter = listAdapter
@@ -56,7 +58,12 @@ class ListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        listBinding = FragmentListBinding.inflate(inflater, container, false)
-        return listBinding.root
+        _binding = FragmentListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

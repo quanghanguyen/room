@@ -17,6 +17,7 @@
             android:id="@+id/action_listFragment_to_updateFragment"
             app:destination="@id/updateFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/addFragment"
         android:name="com.example.room.fragments.add.AddFragment"
@@ -26,6 +27,7 @@
             android:id="@+id/action_addFragment_to_listFragment"
             app:destination="@id/listFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/updateFragment"
         android:name="com.example.room.UpdateFragment"

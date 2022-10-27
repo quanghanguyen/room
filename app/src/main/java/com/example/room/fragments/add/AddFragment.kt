@@ -17,20 +17,22 @@ import com.example.room.databinding.FragmentAddBinding
 
 class AddFragment: Fragment() {
 
-    private lateinit var addBinding : FragmentAddBinding
+//    private lateinit var addBinding : FragmentAddBinding
+    private var _binding: FragmentAddBinding? = null
+    private val binding get() = _binding!!
     private val userViewModel : UserViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addBinding.add.setOnClickListener {
+        binding.add.setOnClickListener {
             insertDataToDatabase()
         }
     }
 
     private fun insertDataToDatabase() {
-        val firstName = addBinding.firstName.text.toString()
-        val lastName = addBinding.lastName.text.toString()
-        val age = addBinding.age.text
+        val firstName = binding.firstName.text.toString()
+        val lastName = binding.lastName.text.toString()
+        val age = binding.age.text
 
         if (inputCheck(firstName, lastName, age)) {
             val user = User(0, firstName, lastName, Integer.parseInt(age.toString()))
@@ -50,7 +52,12 @@ class AddFragment: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        addBinding = FragmentAddBinding.inflate(inflater, container, false)
-        return addBinding.root
+        _binding = FragmentAddBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
